@@ -1,0 +1,79 @@
+name: Running code
+
+on:
+  pull_request:
+    branches:
+      - submission
+
+jobs:
+  check-reproducibility:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Remove old labels
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const currentLabels = labels.map(label => label.name);
+
+            const labelsToRemove = ['reproducible', 'not reproducible'];
+            const labelsToRemoveFiltered = currentLabels.filter(label => labelsToRemove.includes(label));
+
+            if (labelsToRemoveFiltered.length > 0) {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                name: labelsToRemoveFiltered
+              });
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run setup script
+        run: pip3 install .
+
+      - name: Run main.py
+        id: run_main
+        run: |
+          set +e
+          timeout 5 python3 src/main.py
+          exit_code=$?
+          echo "::set-output name=EXIT_CODE::${exit_code}"
+
+      - name: Add label for success
+        if: steps.run_main.outputs.exit_code == 0 || steps.run_main.outputs.exit_code == 124
+        uses: actions/github-script@v5
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ["reproducible"]
+            });
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add label for failure
+        if: steps.run_main.outputs.exit_code != 0 && steps.run_main.outputs.exit_code != 124
+        uses: actions/github-script@v5
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ["not reproducible"]
+            });
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,67 @@
+name: In-Time Submission
+
+on:
+  pull_request:
+    branches:
+      - submission
+
+jobs:
+  check-deadline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Get latest commit timestamp
+        id: commit_timestamp
+        run: |
+          TIMESTAMP=$(git log -1 --format=%at)
+          echo "::set-output name=timestamp::${TIMESTAMP}"
+
+      - name: Add label
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const timestamp = parseInt(process.env.TIMESTAMP) * 1000;
+            const deadline = new Date('2024-02-04T23:59:00Z').getTime();
+            const newLabel = timestamp < deadline ? 'in time' : 'late';
+
+            console.log(timestamp, deadline);
+
+            const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const currentLabels = labels.map(label => label.name);
+
+            // Remove "in time" and "late" labels if present
+            const labelsToRemove = ['in time', 'late'];
+            const labelsToRemoveFiltered = currentLabels.filter(label => labelsToRemove.includes(label));
+
+            if (labelsToRemoveFiltered.length > 0) {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                name: labelsToRemoveFiltered
+              });
+            }
+
+            // Add the new label
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: [newLabel]
+            });
+        env:
+          TIMESTAMP: ${{ steps.commit_timestamp.outputs.timestamp }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
