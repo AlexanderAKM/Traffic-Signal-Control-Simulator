@@ -44,7 +44,7 @@ def generate_routefile():
     pWE = 1. / 10
     pEW = 1. / 11
     pNS = 1. / 30
-    with open("cross.rou.xml", "w") as routes:
+    with open("src/Intersection/Configuration/cross.rou.xml", "w") as routes:
         print("""<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" \
 guiShape="passenger"/>
@@ -68,16 +68,6 @@ guiShape="passenger"/>
                     vehNr, i), file=routes)
                 vehNr += 1
         print("</routes>", file=routes)
-
-# The program looks like this
-#    <tlLogic id="0" type="static" programID="0" offset="0">
-# the locations of the tls are      NESW
-#        <phase duration="31" state="GrGr"/>
-#        <phase duration="6"  state="yryr"/>
-#        <phase duration="31" state="rGrG"/>
-#        <phase duration="6"  state="ryry"/>
-#    </tlLogic>
-
 
 def run():
     """execute the TraCI control loop"""
@@ -123,6 +113,6 @@ if __name__ == "__main__":
 
     # this is the normal way of using traci. sumo is started as a
     # subprocess and then the python script connects and runs
-    traci.start([sumoBinary, "-c", "cross.sumocfg",
-                             "--tripinfo-output", "tripinfo.xml"])
+    traci.start([sumoBinary, "-c", "src/Intersection/Configuration/cross.sumocfg",
+                             "--tripinfo-output", "src/Intersection/Configuration/tripinfo.xml"])
     run()

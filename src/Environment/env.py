@@ -78,7 +78,6 @@ class SumoEnvironment(gym.Env):
         yellow_time: int = 2,
         min_green: int = 5,
         max_green: int = 50,
-        single_agent: bool = False,
         reward_fn: Union[str, Callable, dict] = "diff-waiting-time",
         observation_class: ObservationFunction = DefaultObservationFunction,
         add_system_info: bool = True,
@@ -115,7 +114,6 @@ class SumoEnvironment(gym.Env):
         self.min_green = min_green
         self.max_green = max_green
         self.yellow_time = yellow_time
-        self.single_agent = single_agent
         self.reward_fn = reward_fn
         self.sumo_seed = sumo_seed
         self.fixed_ts = fixed_ts
@@ -275,10 +273,7 @@ class SumoEnvironment(gym.Env):
 
         self.vehicles = dict()
 
-        if self.single_agent:
-            return self._compute_observations()[self.ts_ids[0]], self._compute_info()
-        else:
-            return self._compute_observations()
+        return self._compute_observations()[self.ts_ids[0]], self._compute_info()
 
     @property
     def sim_step(self) -> float:
@@ -308,10 +303,7 @@ class SumoEnvironment(gym.Env):
         truncated = dones["__all__"]  # episode ends when sim_step >= max_steps
         info = self._compute_info()
 
-        if self.single_agent:
-            return observations[self.ts_ids[0]], rewards[self.ts_ids[0]], terminated, truncated, info
-        else:
-            return observations, rewards, dones, info
+        return observations[self.ts_ids[0]], rewards[self.ts_ids[0]], terminated, truncated, info
 
     def _run_steps(self):
         time_to_act = False
@@ -329,13 +321,9 @@ class SumoEnvironment(gym.Env):
         - actions: If single-agent, actions is an int between 0 and self.num_green_phases (next green phase)
                    If multiagent, actions is a dict {ts_id : greenPhase}
         """
-        if self.single_agent:
-            if self.traffic_signals[self.ts_ids[0]].time_to_act:
-                self.traffic_signals[self.ts_ids[0]].set_next_phase(actions)
-        else:
-            for ts, action in actions.items():
-                if self.traffic_signals[ts].time_to_act:
-                    self.traffic_signals[ts].set_next_phase(action)
+        
+        if self.traffic_signals[self.ts_ids[0]].time_to_act:
+            self.traffic_signals[self.ts_ids[0]].set_next_phase(actions)
 
     def _compute_dones(self):
         dones = {ts_id: False for ts_id in self.ts_ids}
@@ -454,9 +442,9 @@ class SumoEnvironment(gym.Env):
     def save_csv(self, out_csv_name, episode):
         """Save metrics of the simulation to a .csv file.
 
-        Args:
-            out_csv_name (str): Path to the output .csv file. E.g.: "results/my_results
-            episode (int): Episode number to be appended to the output file name.
+        Parameters:
+        - out_csv_name (str): Path to the output .csv file. E.g.: "results/my_results
+        - episode (int): Episode number to be appended to the output file name.
         """
         if out_csv_name is not None:
             df = pd.DataFrame(self.metrics)
