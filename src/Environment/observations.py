@@ -2,7 +2,7 @@
 from abc import abstractmethod
 
 import numpy as np
-from gym import spaces
+from gymnasium import spaces
 
 from .traffic_signal import TrafficSignal
 

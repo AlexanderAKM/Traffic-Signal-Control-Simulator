@@ -13,7 +13,7 @@ else:
     raise ImportError("Please declare the environment variable 'SUMO_HOME'")
 
 import numpy as np
-from gym import spaces
+from gymnasium import spaces
 
 
 class TrafficSignal:
