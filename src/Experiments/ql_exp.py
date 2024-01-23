@@ -1,9 +1,13 @@
 import os
 import sys
+import json
 
 import gymnasium as gym
 from stable_baselines3.dqn.dqn import DQN
 
+# Read configuration (see config.json)
+with open('config.json', 'r') as config_file:
+    config = json.load(config_file)
 
 if "SUMO_HOME" in os.environ:
     tools = os.path.join(os.environ["SUMO_HOME"], "tools")
@@ -12,7 +16,8 @@ else:
     sys.exit("Please declare the environment variable 'SUMO_HOME'")
 import traci
 
-sys.path.append("/UNI_STUFF/SECOND_YEAR/Block_1B/Reinforcement Learning/Assignments/final-40")
+# Use paths from config file
+sys.path.append(config["project_base_path"])
 from src.Environment.env import SumoEnvironment
 
 
