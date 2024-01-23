@@ -35,16 +35,16 @@ else:
 
 from sumolib import checkBinary  # noqa
 import traci  # noqa
-
+import numpy as np
 
 def generate_routefile():
     random.seed(42)  # make tests reproducible
-    N = 100000  # number of time steps
+    N = 3000  # number of time steps
     # demand per second from different directions
-    pWE = 1. / 30
-    pEW = 1. / 30
-    pNS = 1. / 30
-    pSN = 1. / 30
+    pWE = 1. / np.random.randint(low = 10, high = 20)
+    pEW = 1. / np.random.randint(low = 10, high = 20)
+    pNS = 1. / np.random.randint(low = 10, high = 20)
+    pSN = 1. / np.random.randint(low = 10, high = 20)
     with open("src/Intersection/Configuration/cross.rou.xml", "w") as routes:
         print("""<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" \

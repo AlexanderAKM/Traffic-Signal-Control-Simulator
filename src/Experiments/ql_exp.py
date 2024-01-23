@@ -27,7 +27,7 @@ if __name__ == "__main__":
         route_file="src/Intersection/Configuration/cross.rou.xml",
         out_csv_name="data/test_csv",
         use_gui=True,
-        num_seconds=100000,
+        num_seconds=3000,
     )
 
     model = DQN(
@@ -41,4 +41,4 @@ if __name__ == "__main__":
         exploration_final_eps=0.01,
         verbose=1,
     )
-    model.learn(total_timesteps=100000)
+    model.learn(total_timesteps=3000)
