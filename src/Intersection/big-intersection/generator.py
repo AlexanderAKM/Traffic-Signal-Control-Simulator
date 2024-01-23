@@ -30,7 +30,7 @@ class TrafficGenerator:
         car_gen_steps = np.rint(car_gen_steps)  # round every value to int -> effective steps when a car will be generated
 
         # produce the file for cars generation, one car per line
-        with open("routes.rou.xml", "w") as routes:
+        with open("src/Intersection/big-intersection/routes.rou.xml", "w") as routes:
             print(
                 """<routes>
             <vType accel="1.0" decel="4.5" id="standard_car" length="5.0" minGap="2.5" maxSpeed="25" sigma="0.5" />
@@ -131,5 +131,5 @@ class TrafficGenerator:
             print("</routes>", file=routes)
 
 
-TrafficGenerator(100000, 74000).generate_routefile
+TrafficGenerator(100000, 74000).generate_routefile(0)
 #TrafficGenerator(5400, 4000).generate_routefile(0)

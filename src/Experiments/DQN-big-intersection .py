@@ -28,7 +28,7 @@ for i in range(num_experiments):
         route_file="src/Intersection/big-intersection/routes.rou.xml",
         out_csv_name="outputs/big-intersection/dqn",
         use_gui=True,
-        num_seconds=5400,
+        num_seconds=100000,
         yellow_time=4,
         min_green=5,
         max_green=60,
