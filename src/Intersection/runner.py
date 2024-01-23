@@ -39,7 +39,7 @@ import numpy as np
 
 def generate_routefile():
     random.seed(42)  # make tests reproducible
-    N = 3000  # number of time steps
+    N = 6000 # number of time steps
     # demand per second from different directions
     pWE = 1. / np.random.randint(low = 10, high = 20)
     pEW = 1. / np.random.randint(low = 10, high = 20)
