@@ -1,5 +1,29 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+
+# Load the CSV file
+file_path = 'data\dqn_conn0_ep1.csv'  
+data = pd.read_csv(file_path)
+
+# Plotting
+plt.figure(figsize=(10, 5))
+plt.plot(data['step'], data['system_total_waiting_time'], label='Total Waiting Time')
+
+plt.xlabel('Step')
+plt.ylabel('System Total Waiting Time')
+plt.title('System Total Waiting Time vs Step')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
+'''
+import pandas as pd
+import matplotlib.pyplot as plt
 import glob
 
 # Define a function to calculate the rolling average
@@ -46,3 +70,4 @@ plt.savefig('data/smoothed_total_waiting_time_plot.png', format='png')
 
 # Show the plot
 plt.show()
+'''
