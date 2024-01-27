@@ -2,7 +2,8 @@ import os
 import sys
 import json
 import gymnasium as gym
-from stable_baselines3.dqn.dqn import DQN
+from stable_baselines3 import A2C
+from stable_baselines3.a2c import MlpPolicy
 
 # Read configuration (see config.json)
 with open('config.json', 'r') as config_file:
@@ -26,24 +27,29 @@ for i in range(num_experiments):
     env = SumoEnvironment(
         net_file="src/Intersection/2way-single-intersection/single-intersection.net.xml",
         route_file="src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
-        out_csv_name=f"data/DQN_2way_test_csv_run{i}",  # Unique file name for each run
+        out_csv_name=f"data/A2C_2way_test_csv_run{i}",  # Unique file name for each run
         use_gui=True,
         num_seconds=6000,
     )
 
-    model = DQN(
+    model = A2C(
+        policy=MlpPolicy,
         env=env,
-        policy="MlpPolicy", # We should use epsilon greedy for DQN only.
         learning_rate=0.001,
-        learning_starts=0,
-        train_freq=1,
-        target_update_interval=500,
-        exploration_initial_eps=0.05,
-        exploration_final_eps=0.01,
+        n_steps=5,
+        gamma=0.99,
+        gae_lambda=1.0,
+        ent_coef=0.01,
+        vf_coef=0.5,
+        max_grad_norm=0.5,
+        #tensorboard_log="./a2c_tensorboard/",  # Optional: For tensorboard logging
         verbose=1,
     )
+
 
     model.learn(total_timesteps=6000)
 
     # After learning, you may want to save the model
-    # model.save(f"data/dqn_model_run{i}")
+    # model.save(f"data/a2c_model_run{i}")
+
+# Additional code for saving results or handling outputs
