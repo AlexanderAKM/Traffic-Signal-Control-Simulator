@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the CSV file
-file_path = 'data/2way_test_csv_run0_conn0_ep1.csv'
-#file_path = 'data/dqn_conn0_ep1.csv'  
+#file_path = 'data/2way_test_csv_run0_conn0_ep1.csv'
+file_path = 'data/dqn_conn0_ep1.csv'  
 data = pd.read_csv(file_path)
 
 # Plotting
@@ -15,7 +15,12 @@ plt.ylabel('System Total Waiting Time')
 plt.title('System Total Waiting Time vs Step')
 plt.legend()
 plt.grid(True)
+
+plt.savefig('outputs/dqn_big_intersection.png', format='png')
+
 plt.show()
+
+
 
 
 
