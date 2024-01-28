@@ -1,10 +1,33 @@
-import os
-import sys
-import json
 import gymnasium as gym
 from stable_baselines3 import A2C
 from stable_baselines3.a2c import MlpPolicy
+from agent import Agent
 
+class A2CAgent(Agent):
+    def __init__(self, num_experiments=1):
+        super().__init__('A2C', num_experiments)
+
+    def setup_model(self, env):
+        self.model = A2C(
+            policy=MlpPolicy,
+            env=env,
+            learning_rate=0.001,
+            n_steps=5,
+            gamma=0.99,
+            gae_lambda=1.0,
+            ent_coef=0.01,
+            vf_coef=0.5,
+            max_grad_norm=0.5,
+            #tensorboard_log="./a2c_tensorboard/",  # Optional: For tensorboard logging
+            verbose=1
+        )
+        
+a2c_agent = A2CAgent()
+a2c_agent.run_experiments()
+
+
+
+'''
 # Read configuration (see config.json)
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
@@ -43,7 +66,7 @@ for i in range(num_experiments):
         vf_coef=0.5,
         max_grad_norm=0.5,
         #tensorboard_log="./a2c_tensorboard/",  # Optional: For tensorboard logging
-        verbose=1,
+        verbose=1
     )
 
 
@@ -53,3 +76,4 @@ for i in range(num_experiments):
     # model.save(f"data/a2c_model_run{i}")
 
 # Additional code for saving results or handling outputs
+'''

@@ -1,10 +1,11 @@
 import os
 import sys
 import json
-from stable_baselines3 import A2C, PPO, DQN  # Import all the algorithms you intend to use
+from stable_baselines3 import A2C, PPO, DQN  # Here import all the algorithms you intend to use
 from stable_baselines3.a2c import MlpPolicy
 
-class BaseAgent:
+
+class Agent:
     def __init__(self, agent_type, num_experiments=50):
         self.config = self.load_configuration()
         self.setup_sumo_environment(self.config)
@@ -26,7 +27,6 @@ class BaseAgent:
 
     def run_experiments(self):
         from src.Environment.env import SumoEnvironment
-
         for i in range(self.num_experiments):
             env = SumoEnvironment(
                 net_file="src/Intersection/2way-single-intersection/single-intersection.net.xml",
