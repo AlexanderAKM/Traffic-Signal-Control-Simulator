@@ -1,5 +1,4 @@
 from stable_baselines3 import A2C
-from stable_baselines3.a2c import MlpPolicy
 from agent import Agent
 
 class A2CAgent(Agent):
@@ -8,7 +7,7 @@ class A2CAgent(Agent):
 
     def setup_model(self, env):
         self.model = A2C(
-            policy=MlpPolicy,
+            policy="MlpPolicy",
             env=env,
             learning_rate=0.001,
             n_steps=5,
