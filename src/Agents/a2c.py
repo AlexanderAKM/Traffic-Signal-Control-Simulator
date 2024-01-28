@@ -18,7 +18,6 @@ class A2CAgent(Agent):
             ent_coef=0.01,
             vf_coef=0.5,
             max_grad_norm=0.5,
-            #tensorboard_log="./a2c_tensorboard/",  # Optional: For tensorboard logging
             verbose=1
         )
         
