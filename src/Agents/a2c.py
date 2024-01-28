@@ -1,4 +1,3 @@
-import gymnasium as gym
 from stable_baselines3 import A2C
 from stable_baselines3.a2c import MlpPolicy
 from agent import Agent

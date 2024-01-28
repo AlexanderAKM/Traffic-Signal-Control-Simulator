@@ -1,3 +1,28 @@
+from stable_baselines3 import DQN
+from agent import Agent
+
+class DQNAgent(Agent):
+    def __init__(self, num_experiments=1):
+        super().__init__('DQN', num_experiments)
+
+    def setup_model(self, env):
+        self.model = DQN(
+            policy="MlpPolicy",
+            env=env,
+            learning_rate=0.001,
+            learning_starts=0,
+            train_freq=1,
+            target_update_interval=500,
+            exploration_initial_eps=0.05,
+            exploration_final_eps=0.01,
+            verbose=1,
+        )
+        
+dqn_agent = DQNAgent()
+dqn_agent.run_experiments()
+
+
+
 # import torch
 # import torch.nn as nn
 # import torch.optim as optim
