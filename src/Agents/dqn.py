@@ -7,10 +7,6 @@ import torch.optim as optim
 import math
 from itertools import count
 
-import os
-import sys
-import json
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 Transition = namedtuple('Transition', ('state', 'action', 'next_state', 'reward'))

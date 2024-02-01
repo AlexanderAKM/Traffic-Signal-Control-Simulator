@@ -33,4 +33,4 @@ if __name__ == '__main__':
         )
 
         dqn = DQNTrain(env = env)
-        dqn.train(num_episodes=6000)
+        dqn.train(num_episodes=1)
