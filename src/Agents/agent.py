@@ -26,7 +26,7 @@ class Agent:
         sys.path.append(config["project_base_path"])
 
     def run_experiments(self):
-        from src.Environment.env import SumoEnvironment
+        from src.environment.env import SumoEnvironment
         for i in range(self.num_experiments):
             env = SumoEnvironment(
                 net_file="src/Intersection/2way-single-intersection/single-intersection.net.xml",
@@ -39,6 +39,5 @@ class Agent:
             self.setup_model(env)
             self.model.learn(total_timesteps=6000)
             
-
     def setup_model(self, env):
         raise NotImplementedError("This method should be implemented by subclasses")
