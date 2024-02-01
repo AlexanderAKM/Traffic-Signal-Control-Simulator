@@ -6,6 +6,7 @@ from stable_baselines3.a2c import MlpPolicy
 
 
 class Agent:
+    
     def __init__(self, agent_type, num_experiments=50):
         self.config = self.load_configuration()
         self.setup_sumo_environment(self.config)
