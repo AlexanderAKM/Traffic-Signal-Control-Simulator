@@ -121,7 +121,6 @@ class DQNTrain():
         self.optimizer.step()
 
     def train(self, num_episodes):
-
         for i in range(num_episodes):
             # Initialize the environment and get its state
             state, info = self.env.reset()
@@ -155,6 +154,4 @@ class DQNTrain():
                 self.target_net.load_state_dict(target_net_state_dict)
 
                 if done:
-                    # episode_durations.append(t + 1)
-                    # plot_durations()
                     break
