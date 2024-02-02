@@ -1,4 +1,4 @@
-from agent import Agent  # Make sure this import matches the location of your Agent class
+from agent import Agent  
 
 class StochasticModel(Agent):
     def __init__(self, num_experiments=1):
@@ -14,7 +14,7 @@ class StochasticModel(Agent):
         for step in range(total_timesteps):
             action = self.action_space.sample()  # Random action
             obs, reward, terminated, truncated, info = self.env.step(action)
-            if truncated:  # Check if the episode should end
+            if terminated or truncated:  # Check if the episode should end
                 self.env.save_csv(self.env.out_csv_name, self.env.episode)  # Call the save_csv method
                 break
         self.env.close()

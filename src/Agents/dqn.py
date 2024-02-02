@@ -41,7 +41,7 @@ class DQN(nn.Module):
 
         return self.layer3(x)
 
-class DQNTrain():
+class DQN():
 
     def __init__(self,
                  env = None,

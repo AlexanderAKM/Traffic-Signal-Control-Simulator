@@ -23,7 +23,6 @@ import traci
 
 # Use paths from config file
 sys.path.append(config["project_base_path"])
-from src.environment.env import SumoEnvironment
 
 # hyperparameters
 hidden_size = 256
@@ -135,17 +134,4 @@ class A2C():
             self.ac_optimizer.zero_grad()
             ac_loss.backward()
             self.ac_optimizer.step()
-
-
-for i in range(1):
-    env = SumoEnvironment(
-        net_file="src/Intersection/2way-single-intersection/single-intersection.net.xml",
-        route_file="src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
-        out_csv_name=f"data/A2C_2way_test_csv_run{i}",
-        use_gui=True,
-        num_seconds=6000,
-    )
-
-    a2c = A2C(env = env)
-    a2c.train(num_episodes = 3)
         
