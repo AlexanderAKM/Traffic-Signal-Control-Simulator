@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 #file_path = 'data/DQN_2way_test_csv_run0_conn0_ep1.csv'
 #file_path = 'data/A2C_2way_test_csv_run0_conn0_ep1.csv'
 # file_path = 'data/PPO_2way_test_csv_run0_conn0_ep1.csv'
-file_path = 'data/dqn_2way_test_csv_run0_conn0_ep2.csv'
+# file_path = 'data/dqn_2way_test_csv_run0_conn0_ep2.csv'
+file_path = 'data/A2C_2way_test_csv_run0_conn0_ep1.csv'
 data = pd.read_csv(file_path)
 
 # Plotting
@@ -20,7 +21,7 @@ plt.title('System Total Waiting Time vs Step')
 plt.legend()
 plt.grid(True)
 
-plt.savefig('outputs/dqn_2way_intersection.png', format='png')
+plt.savefig('outputs/a2c_2way_intersection.png', format='png')
 
 plt.show()
 

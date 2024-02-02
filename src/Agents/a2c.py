@@ -1,80 +1,3 @@
-# from stable_baselines3 import A2C
-# from agent import Agent
-
-# class A2CAgent(Agent):
-#     def __init__(self, num_experiments=1):
-#         super().__init__('A2C', num_experiments)
-
-#     def setup_model(self, env):
-#         self.model = A2C(
-#             policy="MlpPolicy",
-#             env=env,
-#             learning_rate=0.001,
-#             n_steps=5,
-#             gamma=0.99,
-#             gae_lambda=1.0,
-#             ent_coef=0.01,
-#             vf_coef=0.5,
-#             max_grad_norm=0.5,
-#             verbose=1
-#         )
-        
-# a2c_agent = A2CAgent()
-# a2c_agent.run_experiments()
-
-
-
-# '''
-# # Read configuration (see config.json)
-# with open('config.json', 'r') as config_file:
-#     config = json.load(config_file)
-
-# if "SUMO_HOME" in os.environ:
-#     tools = os.path.join(os.environ["SUMO_HOME"], "tools")
-#     sys.path.append(tools)
-# else:
-#     sys.exit("Please declare the environment variable 'SUMO_HOME'")
-# import traci
-
-# # Use paths from config file
-# sys.path.append(config["project_base_path"])
-# from src.Environment.env import SumoEnvironment
-
-# # Number of experiments to run
-# num_experiments = 50
-
-# for i in range(num_experiments):
-#     env = SumoEnvironment(
-#         net_file="src/Intersection/2way-single-intersection/single-intersection.net.xml",
-#         route_file="src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
-#         out_csv_name=f"data/A2C_2way_test_csv_run{i}",  # Unique file name for each run
-#         use_gui=True,
-#         num_seconds=6000,
-#     )
-
-#     model = A2C(
-#         policy=MlpPolicy,
-#         env=env,
-#         learning_rate=0.001,
-#         n_steps=5,
-#         gamma=0.99,
-#         gae_lambda=1.0,
-#         ent_coef=0.01,
-#         vf_coef=0.5,
-#         max_grad_norm=0.5,
-#         #tensorboard_log="./a2c_tensorboard/",  # Optional: For tensorboard logging
-#         verbose=1
-#     )
-
-
-#     model.learn(total_timesteps=6000)
-
-#     # After learning, you may want to save the model
-#     # model.save(f"data/a2c_model_run{i}")
-
-# # Additional code for saving results or handling outputs
-# '''
-
 import sys
 import torch  
 import numpy as np  
@@ -133,7 +56,7 @@ class A2C():
     def __init__(self, 
                  env = None,
                  lr = 0.001,
-                 n_steps = 5,
+                 n_steps = 6000,
                  gamma = 0.99,
                  gae_lambda = 1.0, 
                  ent_coef = 0.01, 
@@ -191,9 +114,6 @@ class A2C():
                     all_rewards.append(np.sum(rewards))
                     all_lengths.append(steps)
                     average_lengths.append(np.mean(all_lengths[-10:]))
-                    if episode % 10 == 0:                    
-                        sys.stdout.write("episode: {}, reward: {}, total length: {}, average length: \
-                                          {} \n".format(episode, np.sum(rewards), steps, average_lengths[-1]))
                     break
             
             # compute Q values
@@ -221,11 +141,11 @@ for i in range(1):
     env = SumoEnvironment(
         net_file="src/Intersection/2way-single-intersection/single-intersection.net.xml",
         route_file="src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
-        out_csv_name=f"data/a2c_2way_test_csv_run{i}",
+        out_csv_name=f"data/A2C_2way_test_csv_run{i}",
         use_gui=True,
         num_seconds=6000,
     )
 
     a2c = A2C(env = env)
-    a2c.train(num_episodes = 1)
+    a2c.train(num_episodes = 3)
         
