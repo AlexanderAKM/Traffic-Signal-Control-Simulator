@@ -21,6 +21,3 @@ class PPOAgent(Agent):
             max_grad_norm=0.5,
             verbose=1,
         )
-        
-ppo_agent = PPOAgent()
-ppo_agent.run_experiments()
