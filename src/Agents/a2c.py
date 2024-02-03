@@ -52,31 +52,17 @@ class A2CNetwork(nn.Module):
 
 class A2C():
 
-    def __init__(self, 
-                 env = None,
-                 lr = 0.001,
-                 n_steps = 6000,
-                 gamma = 0.99,
-                 gae_lambda = 1.0, 
-                 ent_coef = 0.01, 
-                 vf_coef = 0.5, 
-                 max_grad_norm = 0.5):
-        
+    def __init__(self, env = None, lr = 0.001, n_steps = 6000, gamma = 0.99):
         self.env = env
         self.lr = lr
         self.n_steps = n_steps
         self.gamma = gamma
-        self.gae_lambda = gae_lambda
-        self.ent_coef = ent_coef
-        self.vf_coef = vf_coef
-        self.max_grad_norm = max_grad_norm
 
         self.num_inputs = self.env.observation_space.shape[0]
         self.num_outputs = self.env.action_space.n
 
         self.actor_critic = A2CNetwork(self.num_inputs, self.num_outputs, 128)
         self.ac_optimizer = optim.Adam(self.actor_critic.parameters(), lr = self.lr)
-        
         
     def train(self, num_episodes):
         all_lengths = []
@@ -89,7 +75,7 @@ class A2C():
             values = []
             rewards = []
 
-            state, info = self.env.reset()
+            state, _ = self.env.reset()
             for steps in range(self.n_steps):
                 value, policy_dist = self.actor_critic.forward(state)
                 value = value.detach().numpy()[0, 0]
