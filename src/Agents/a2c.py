@@ -26,7 +26,6 @@ sys.path.append(config["project_base_path"])
 
 # hyperparameters
 hidden_size = 256
-learning_rate = 3e-4
 
 class A2CNetwork(nn.Module):
 
