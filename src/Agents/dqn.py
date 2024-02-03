@@ -26,7 +26,7 @@ class ReplayMemory(object):
         return len(self.memory)
     
 
-class DQN(nn.Module):
+class DQNet(nn.Module):
 
     def __init__(self, n_observations, n_actions):
         super(DQN, self).__init__()
@@ -76,6 +76,9 @@ class DQN():
         self.steps_done = 0
 
     def select_action(self, state):
+        """ Chooses an action 
+        
+        """
         sample = random.random()
         eps_threshold = self.eps_end + (self.eps_start - self.eps_end) * \
             math.exp(-1. * self.steps_done / self.eps_decay)
