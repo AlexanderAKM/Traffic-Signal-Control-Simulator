@@ -28,13 +28,13 @@ class Agent:
             env = SumoEnvironment(
                 net_file="src/Intersection/2way-single-intersection/single-intersection.net.xml",
                 route_file="src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
-                out_csv_name=f"data/{self.agent_type}_2way_test_csv_ep{i}",
+                out_csv_name=f"data/{self.agent_type}_2way",
                 use_gui = False,
                 num_seconds = 6000,
             )
 
             self.setup_model(env)
-            self.model.learn(total_timesteps=6000)
+            self.model.learn(total_timesteps = 6000)
             
     def setup_model(self):
         raise NotImplementedError("This method should be implemented by subclasses")

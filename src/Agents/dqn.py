@@ -16,8 +16,8 @@ class ReplayMemory(object):
     A cyclic buffer of bounded size that holds the transitions observed by the agent.
     
     Attributes:
-        memory (deque): A double-ended queue that stores transitions.
-        capacity (int): The maximum size of the memory.
+    - memory (deque): A double-ended queue that stores transitions.
+    - capacity (int): The maximum size of the memory.
     """
 
     def __init__(self, capacity):
@@ -25,7 +25,7 @@ class ReplayMemory(object):
         Initializes the ReplayMemory.
         
         Parameters:
-            capacity (int): The size of the memory.
+        - capacity (int): The size of the memory.
         """
         self.memory = deque([], maxlen=capacity)
     
@@ -43,10 +43,10 @@ class ReplayMemory(object):
         Randomly samples a batch of transitions from memory.
         
         Parameters:
-            batch_size (int): The size of the sample.
+        - batch_size (int): The size of the sample.
             
         Returns:
-            list: A sampled batch of transitions.
+        - list: A sampled batch of transitions.
         """
         return random.sample(self.memory, batch_size)
     
@@ -55,7 +55,7 @@ class ReplayMemory(object):
         Returns the current size of internal memory.
         
         Returns:
-            int: The current size of memory.
+        - int: The current size of memory.
         """
         return len(self.memory)
     
@@ -71,8 +71,8 @@ class DQNet(nn.Module):
         Initializes the DQN network with a single hidden layer.
         
         Parameters:
-            n_observations (int): The dimension of the observation space.
-            n_actions (int): The dimension of the action space.
+        - n_observations (int): The dimension of the observation space.
+        - n_actions (int): The dimension of the action space.
         """
         super(DQNet, self).__init__()
 
@@ -103,14 +103,14 @@ class DQN():
         Initializes the DQN agent.
         
         Parameters:
-            env: The environment the agent interacts with.
-            batch_size (int): The size of the batch for optimization.
-            gamma (float): The discount factor for future rewards.
-            eps_start (float): The starting value of epsilon for epsilon-greedy exploration.
-            eps_end (float): The minimum value of epsilon after decay.
-            eps_decay (int): The rate at which epsilon decays.
-            tau (float): The interpolation parameter for updating the target network.
-            lr (float): The learning rate for the optimizer.
+        - env: The environment the agent interacts with.
+        - batch_size (int): The size of the batch for optimization.
+        - gamma (float): The discount factor for future rewards.
+        - eps_start (float): The starting value of epsilon for epsilon-greedy exploration.
+        - eps_end (float): The minimum value of epsilon after decay.
+        - eps_decay (int): The rate at which epsilon decays.
+        - tau (float): The interpolation parameter for updating the target network.
+        - lr (float): The learning rate for the optimizer.
         """
         self.env = env
         self.batch_size = batch_size

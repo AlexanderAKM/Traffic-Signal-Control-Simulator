@@ -21,14 +21,14 @@ from src.agents.dqn import DQN
 from src.agents.a2c import A2C
 from src.agents.stochastic import StochasticModel
 
-from src.plotting import plot
+from src.plotting.plot import plotWaitingTime
 
 # Run the experiments
 if __name__ == '__main__':
 
     # Random agent
     stochastic_agent = StochasticModel()
-    stochastic_agent.train(num_episodes = 3)
+    stochastic_agent.train(num_episodes = 1)
     
     # DQN
     env = SumoEnvironment(
@@ -55,4 +55,6 @@ if __name__ == '__main__':
     a2c.train(num_episodes = 3)
 
     # Plot the results
-    plot()
+    plotWaitingTime(a2c_file = 'data/A2C_2way_ep2.csv', 
+                    dqn_file = 'data/DQN_2way_ep2.csv', 
+                    random_file = 'data/RANDOM_2way_ep1.csv')

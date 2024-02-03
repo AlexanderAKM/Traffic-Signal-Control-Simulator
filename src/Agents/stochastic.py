@@ -21,7 +21,7 @@ class StochasticModel(Agent):
         Parameters:
             num_experiments (int): The number of experiments to run with the model. Defaults to 1.
         """
-        super().__init__('Stochastic')
+        super().__init__('RANDOM')
 
     def setup_model(self, env):
         """

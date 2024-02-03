@@ -449,7 +449,7 @@ class SumoEnvironment(gym.Env):
         if out_csv_name is not None:
             df = pd.DataFrame(self.metrics)
             Path(Path(out_csv_name).parent).mkdir(parents=True, exist_ok=True)
-            df.to_csv(out_csv_name + f"_conn{self.label}_ep{episode}" + ".csv", index=False)
+            df.to_csv(out_csv_name + f"_ep{episode}" + ".csv", index=False)
 
     # Below functions are for discrete state space
 

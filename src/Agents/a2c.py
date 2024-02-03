@@ -33,11 +33,11 @@ class A2CNetwork(nn.Module):
     Implements the Actor-Critic network architecture.
 
     Attributes:
-        num_actions (int): Number of possible actions in the action space.
-        critic_linear1 (nn.Linear): First linear layer for the critic network.
-        critic_linear2 (nn.Linear): Second linear layer for the critic network, outputting state value.
-        actor_linear1 (nn.Linear): First linear layer for the actor network.
-        actor_linear2 (nn.Linear): Second linear layer for the actor network, outputting action probabilities.
+    - num_actions (int): Number of possible actions in the action space.
+    - critic_linear1 (nn.Linear): First linear layer for the critic network.
+    - critic_linear2 (nn.Linear): Second linear layer for the critic network, outputting state value.
+    - actor_linear1 (nn.Linear): First linear layer for the actor network.
+    - actor_linear2 (nn.Linear): Second linear layer for the actor network, outputting action probabilities.
     """
     
     def __init__(self, num_inputs, num_actions, hidden_size):
@@ -45,9 +45,9 @@ class A2CNetwork(nn.Module):
         Initializes the A2C network with separate actor and critic pathways.
 
         Parameters:
-            num_inputs (int): The number of inputs in the input state space.
-            num_actions (int): The number of possible actions.
-            hidden_size (int): The number of neurons in the hidden layer.
+        - num_inputs (int): The number of inputs in the input state space.
+        - num_actions (int): The number of possible actions.
+        - hidden_size (int): The number of neurons in the hidden layer.
         """
         super(A2CNetwork, self).__init__()
 
@@ -87,10 +87,10 @@ class A2C():
         Initializes the A2C agent.
 
         Parameters:
-            env: The environment to interact with.
-            lr (float): Learning rate.
-            n_steps (int): Number of steps per episode.
-            gamma (float): Discount factor.
+        - env(SumoEnvironment): The environment to interact with.
+        - lr (float): Learning rate.
+        - n_steps (int): Number of steps per episode.
+        - gamma (float): Discount factor.
         """
         self.env = env
         self.lr = lr
@@ -134,7 +134,7 @@ class A2C():
                 value = value.detach().numpy()[0, 0]  # Detach the value from the computation graph and convert to numpy
                 dist = policy_dist.detach().numpy()  # Detach the policy distribution and convert to numpy
 
-                action = np.random.choice(self.num_outputs, p=np.squeeze(dist))  # Sample an action from the policy distribution
+                action = np.random.choice(self.num_outputs, p = np.squeeze(dist))  # Sample an action from the policy distribution
                 log_prob = torch.log(policy_dist.squeeze(0)[action])  # Compute the log probability of the selected action
                 entropy = -np.sum(np.mean(dist) * np.log(dist))  # Calculate the entropy of the policy distribution to encourage exploration
                 new_state, reward, terminated, truncated, _ = self.env.step(action)  # Take the action in the environment and observe the result
