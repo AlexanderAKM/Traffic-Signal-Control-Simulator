@@ -97,16 +97,6 @@ class DQNet(nn.Module):
 class DQN():
     """
     Implements the DQN algorithm.
-    
-    Attributes:
-        env: The environment the agent interacts with.
-        batch_size (int): The mini-batch size for optimization.
-        gamma (float): The discount factor.
-        eps_start (float): The initial value of epsilon for the epsilon-greedy exploration.
-        eps_end (float): The minimum value of epsilon.
-        eps_decay (int): The decay rate of epsilon.
-        tau (float): The soft update parameter for the target network.
-        lr (float): The learning rate.
     """
     def __init__(self, env=None, batch_size=128, gamma=0.99, eps_start=0.9, eps_end=0.05, eps_decay=1000, tau=0.005, lr=1e-4):
         """
@@ -146,7 +136,7 @@ class DQN():
 
     def select_action(self, state):
         """
-        Selects an action according to the epsilon-greedy exploration strategy.
+        Selects an action according to the epsilon-greedy-decay exploration strategy.
         
         Parameters:
             state (Tensor): The current state of the environment.
