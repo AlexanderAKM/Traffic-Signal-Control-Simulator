@@ -202,40 +202,40 @@ class DQN():
         torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 100)
         self.optimizer.step()
 
-def train(self, num_episodes):
-    """
-    Trains the DQN agent over a specified number of episodes.
+    def train(self, num_episodes):
+        """
+        Trains the DQN agent over a specified number of episodes.
 
-    For each episode, the agent interacts with the environment to collect experiences,
-    which are stored in the replay memory. After each action, the agent performs a single
-    optimization step on the policy network. Additionally, the target network's weights
-    are softly updated to slowly track the policy network.
+        For each episode, the agent interacts with the environment to collect experiences,
+        which are stored in the replay memory. After each action, the agent performs a single
+        optimization step on the policy network. Additionally, the target network's weights
+        are softly updated to slowly track the policy network.
 
-    Parameters:
-        num_episodes (int): The number of episodes to train the agent.
-    """
-    for i in range(num_episodes):
-        state, info = self.env.reset()
-        state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
-        for t in count():
-            action = self.select_action(state)
-            observation, reward, terminated, truncated, _ = self.env.step(action.item())
-            reward = torch.tensor([reward], device=device)
-            done = terminated or truncated
+        Parameters:
+            num_episodes (int): The number of episodes to train the agent.
+        """
+        for i in range(num_episodes):
+            state, info = self.env.reset()
+            state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+            for t in count():
+                action = self.select_action(state)
+                observation, reward, terminated, truncated, _ = self.env.step(action.item())
+                reward = torch.tensor([reward], device=device)
+                done = terminated or truncated
 
-            next_state = None if terminated else torch.tensor(observation, dtype=torch.float32, device=device).unsqueeze(0)
+                next_state = None if terminated else torch.tensor(observation, dtype=torch.float32, device=device).unsqueeze(0)
 
-            self.memory.push(state, action, next_state, reward)
-            state = next_state
+                self.memory.push(state, action, next_state, reward)
+                state = next_state
 
-            self.optimize_model()
+                self.optimize_model()
 
-            # Soft update the target network.
-            target_net_state_dict = self.target_net.state_dict()
-            policy_net_state_dict = self.policy_net.state_dict()
-            for key in policy_net_state_dict:
-                target_net_state_dict[key] = policy_net_state_dict[key] * self.tau + target_net_state_dict[key] * (1 - self.tau)
-            self.target_net.load_state_dict(target_net_state_dict)
+                # Soft update the target network.
+                target_net_state_dict = self.target_net.state_dict()
+                policy_net_state_dict = self.policy_net.state_dict()
+                for key in policy_net_state_dict:
+                    target_net_state_dict[key] = policy_net_state_dict[key] * self.tau + target_net_state_dict[key] * (1 - self.tau)
+                self.target_net.load_state_dict(target_net_state_dict)
 
-            if done:
-                break
+                if done:
+                    break

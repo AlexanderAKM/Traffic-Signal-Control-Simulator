@@ -1,4 +1,4 @@
-from agent import Agent  
+from src.agents.agent import Agent  
 
 class StochasticModel(Agent):
     """
@@ -14,14 +14,14 @@ class StochasticModel(Agent):
         model (StochasticModel): A reference to itself, indicating the model is this stochastic agent.
     """
 
-    def __init__(self, num_experiments=1):
+    def __init__(self, num_experiments = 1):
         """
         Initializes the StochasticModel with a specified number of experiments.
         
         Parameters:
             num_experiments (int): The number of experiments to run with the model. Defaults to 1.
         """
-        super().__init__('Stochastic', num_experiments)
+        super().__init__('Stochastic')
 
     def setup_model(self, env):
         """
@@ -45,7 +45,7 @@ class StochasticModel(Agent):
             total_timesteps (int): The total number of timesteps to run the learning process.
         """
         obs = self.env.reset()
-        for step in range(total_timesteps):
+        for _ in range(total_timesteps):
             action = self.action_space.sample()  # Selects a random action.
             obs, reward, terminated, truncated, info = self.env.step(action)
             if terminated or truncated:  # Checks if the episode has ended.
@@ -53,7 +53,7 @@ class StochasticModel(Agent):
                 break
         self.env.close()
 
-    def predict(self, observation, state=None, mask=None, deterministic=False):
+    def predict(self):
         """
         Predicts an action based on the current observation.
         

@@ -19,29 +19,34 @@ from src.environment.env import SumoEnvironment
 
 from src.agents.dqn import DQN
 from src.agents.a2c import A2C
-#from src.agents.ppo import PPOAgent
-#from src.agents.stochastic import StochasticModel
+from src.agents.stochastic import StochasticModel
+
+from src.plotting import plot
 
 # Run the experiments
 if __name__ == '__main__':
-    
-    # # DQN
-    # env = SumoEnvironment(
-    #     net_file = "src/Intersection/2way-single-intersection/single-intersection.net.xml",
-    #     route_file = "src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
-    #     out_csv_name = f"data/DQN_2way_",
-    #     use_gui = False,
-    #     num_seconds = 6000,
-    # )
 
-    # dqn = DQN(env = env)
-    # dqn.train(num_episodes = 3)
+    # Random agent
+    stochastic_agent = StochasticModel()
+    stochastic_agent.train(num_episodes = 3)
+    
+    # DQN
+    env = SumoEnvironment(
+        net_file = "src/Intersection/2way-single-intersection/single-intersection.net.xml",
+        route_file = "src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
+        out_csv_name = f"data/DQN_2way",
+        use_gui = False,
+        num_seconds = 6000,
+    )
+
+    dqn = DQN(env = env)
+    dqn.train(num_episodes = 3)
 
     # A2C
     env = SumoEnvironment(
         net_file = "src/Intersection/2way-single-intersection/single-intersection.net.xml",
         route_file = "src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
-        out_csv_name = f"data/A2C_2way_",
+        out_csv_name = f"data/A2C_2way",
         use_gui = False,
         num_seconds = 6000,
     )
@@ -49,10 +54,5 @@ if __name__ == '__main__':
     a2c = A2C(env = env)
     a2c.train(num_episodes = 3)
 
-    # # PPO
-    # ppo_agent = PPOAgent()
-    # ppo_agent.train(num_episodes = 3)
-
-    # # Random agent
-    # stochastic_agent = StochasticModel()
-    # stochastic_agent.train(num_episodes = 3)
+    # Plot the results
+    plot()
