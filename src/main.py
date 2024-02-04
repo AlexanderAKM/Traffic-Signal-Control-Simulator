@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     # Random agent
     stochastic_agent = StochasticModel()
-    stochastic_agent.train(num_episodes = 1)
+    stochastic_agent.train(num_episodes = 5)
     
     # DQN
     env = SumoEnvironment(
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     )
 
     dqn = DQN(env = env)
-    dqn.train(num_episodes = 3)
+    dqn.train(num_episodes = 5)
 
     # A2C
     env = SumoEnvironment(
@@ -52,9 +52,9 @@ if __name__ == '__main__':
     )
 
     a2c = A2C(env = env)
-    a2c.train(num_episodes = 3)
+    a2c.train(num_episodes = 6)
 
-    # Plot the results
-    plotWaitingTime(a2c_file = 'data/A2C_2way_ep2.csv', 
-                    dqn_file = 'data/DQN_2way_ep2.csv', 
-                    random_file = 'data/RANDOM_2way_ep1.csv')
+    # # Plot the results
+    # plotWaitingTime(a2c_file = 'data/A2C_2way_ep2.csv', 
+    #                 dqn_file = 'data/DQN_2way_ep2.csv', 
+    #                 random_file = 'data/RANDOM_2way_ep1.csv')

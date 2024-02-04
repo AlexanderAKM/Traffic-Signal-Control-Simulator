@@ -34,7 +34,7 @@ class ReplayMemory(object):
         Saves a transition.
         
         Parameters:
-            *args: The components of a transition.
+        - *args: The components of a transition.
         """
         self.memory.append(Transition(*args))
 
@@ -85,10 +85,10 @@ class DQNet(nn.Module):
         Defines the computation performed at every call.
         
         Parameters:
-            x (Tensor): The state input.
+        - x (Tensor): The state input.
             
         Returns:
-            Tensor: The Q-values for each action.
+        - Tensor: The Q-values for each action.
         """
         x = F.relu(self.layer1(x))
         x = F.relu(self.layer2(x))
@@ -147,10 +147,10 @@ class DQN():
         Selects an action according to the epsilon-greedy-decay exploration strategy.
         
         Parameters:
-            state (Tensor): The current state of the environment.
+        - state (Tensor): The current state of the environment.
             
         Returns:
-            Tensor: The action selected by the agent.
+        - Tensor: The action selected by the agent.
         """
         sample = random.random()
         eps_threshold = self.eps_end + (self.eps_start - self.eps_end) * \
@@ -220,7 +220,7 @@ class DQN():
         are softly updated to slowly track the policy network.
 
         Parameters:
-            num_episodes (int): The number of episodes to train the agent.
+        - num_episodes (int): The number of episodes to train the agent.
         """
         for i in range(num_episodes):
             state, info = self.env.reset()

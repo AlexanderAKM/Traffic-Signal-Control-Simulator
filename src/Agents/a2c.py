@@ -63,10 +63,10 @@ class A2CNetwork(nn.Module):
         Forward pass through the network.
 
         Parameters:
-            state (np.array): The current state of the environment.
+        - state (np.array): The current state of the environment.
 
         Returns:
-            Tuple[Tensor, Tensor]: The estimated state value and policy distribution.
+        - Tuple[Tensor, Tensor]: The estimated state value and policy distribution.
         """
         state = Variable(torch.from_numpy(state).float().unsqueeze(0))
         value = F.relu(self.critic_linear1(state))
@@ -112,7 +112,7 @@ class A2C():
         The method tracks the length of each episode, the total rewards, and applies entropy regularization to encourage exploration.
 
         Parameters:
-            num_episodes (int): The number of episodes to train the agent.
+        - num_episodes (int): The number of episodes to train the agent.
 
         Updates:
             Updates the actor-critic network to optimize policy and value function estimation,

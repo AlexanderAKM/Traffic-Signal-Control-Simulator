@@ -9,9 +9,9 @@ class StochasticModel(Agent):
     more sophisticated agents.
     
     Attributes:
-        env (Environment): The environment the agent interacts with.
-        action_space (Space): The space of possible actions the agent can take.
-        model (StochasticModel): A reference to itself, indicating the model is this stochastic agent.
+    - env (Environment): The environment the agent interacts with.
+    - action_space (Space): The space of possible actions the agent can take.
+    - model (StochasticModel): A reference to itself, indicating the model is this stochastic agent.
     """
 
     def __init__(self, num_experiments = 1):
@@ -19,7 +19,7 @@ class StochasticModel(Agent):
         Initializes the StochasticModel with a specified number of experiments.
         
         Parameters:
-            num_experiments (int): The number of experiments to run with the model. Defaults to 1.
+        - num_experiments (int): The number of experiments to run with the model. Defaults to 1.
         """
         super().__init__('RANDOM')
 
@@ -28,7 +28,7 @@ class StochasticModel(Agent):
         Configures the model for interaction with the environment.
         
         Parameters:
-            env (Environment): The environment the model will interact with.
+        - env (Environment): The environment the model will interact with.
         """
         self.env = env
         self.action_space = env.action_space
@@ -42,7 +42,7 @@ class StochasticModel(Agent):
         and optionally saving the results to a CSV file if the episode ends.
         
         Parameters:
-            total_timesteps (int): The total number of timesteps to run the learning process.
+        - total_timesteps (int): The total number of timesteps to run the learning process.
         """
         obs = self.env.reset()
         for _ in range(total_timesteps):
@@ -60,12 +60,12 @@ class StochasticModel(Agent):
         For the StochasticModel, this method always selects an action at random, ignoring the observation.
         
         Parameters:
-            observation: The current observation from the environment.
-            state (optional): The current state for stateful agents. Not used in this model.
-            mask (optional): A mask of valid actions. Not used in this model.
-            deterministic (bool, optional): Whether to use a deterministic policy. Not applicable in this model.
+        - observation: The current observation from the environment.
+        - state (optional): The current state for stateful agents. Not used in this model.
+        - mask (optional): A mask of valid actions. Not used in this model.
+        - deterministic (bool, optional): Whether to use a deterministic policy. Not applicable in this model.
             
         Returns:
-            tuple: A randomly selected action and None (since the model does not maintain a state).
+        - tuple: A randomly selected action and None (since the model does not maintain a state).
         """
         return self.action_space.sample(), None

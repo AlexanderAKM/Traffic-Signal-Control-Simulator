@@ -28,7 +28,7 @@ class Agent:
             env = SumoEnvironment(
                 net_file="src/Intersection/2way-single-intersection/single-intersection.net.xml",
                 route_file="src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
-                out_csv_name=f"data/{self.agent_type}_2way",
+                out_csv_name=f"data/{self.agent_type}_2way_{i}",
                 use_gui = False,
                 num_seconds = 6000,
             )
