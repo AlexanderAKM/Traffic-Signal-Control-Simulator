@@ -16,7 +16,6 @@ import numpy as np
 import pandas as pd
 import sumolib
 import traci
-from gym.utils import seeding
 
 from .observations import DefaultObservationFunction, ObservationFunction
 from .traffic_signal import TrafficSignal
