@@ -8,7 +8,8 @@ on:
 jobs:
   check-reproducibility:
     runs-on: ubuntu-latest
-
+    env:
+      SUMO_HOME: /path/to/sumo
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -48,7 +49,7 @@ jobs:
           set +e
           timeout 5 python3 src/main.py
           exit_code=$?
-          echo "::set-output name=EXIT_CODE::${exit_code}"
+          echo "name=value" >> $GITHUB_ENV
 
       - name: Add label for success
         if: steps.run_main.outputs.exit_code == 0 || steps.run_main.outputs.exit_code == 124
