@@ -1,5 +1,4 @@
 numpy==1.26.2
 pandas==2.1.4
 matplotlib==3.8.2
-torch==2.3.0.dev20240118+cu118
 gymnasium==0.29.1
