@@ -8,7 +8,8 @@ on:
 jobs:
   check-deadline:
     runs-on: ubuntu-latest
-
+    env:
+      SUMO_HOME: /path/to/sumo
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,7 +23,7 @@ jobs:
         id: commit_timestamp
         run: |
           TIMESTAMP=$(git log -1 --format=%at)
-          echo "::set-output name=timestamp::${TIMESTAMP}"
+          echo "name=value" >> $GITHUB_ENV
 
       - name: Add label
         uses: actions/github-script@v5
