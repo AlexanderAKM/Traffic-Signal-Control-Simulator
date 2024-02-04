@@ -98,7 +98,15 @@ class DQN():
     """
     Implements the DQN algorithm.
     """
-    def __init__(self, env=None, batch_size=128, gamma=0.99, eps_start=0.9, eps_end=0.05, eps_decay=1000, tau=0.005, lr=1e-4):
+    def __init__(self, 
+                 env = None, 
+                 batch_size = 128, 
+                 gamma = 0.99, 
+                 eps_start = 0.9, 
+                 eps_end = 0.05, 
+                 eps_decay = 1000, 
+                 tau = 0.005, 
+                 lr = 1e-4):
         """
         Initializes the DQN agent.
         
@@ -217,7 +225,7 @@ class DQN():
         for i in range(num_episodes):
             state, info = self.env.reset()
             state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
-            for t in count():
+            for _ in count():
                 action = self.select_action(state)
                 observation, reward, terminated, truncated, _ = self.env.step(action.item())
                 reward = torch.tensor([reward], device=device)

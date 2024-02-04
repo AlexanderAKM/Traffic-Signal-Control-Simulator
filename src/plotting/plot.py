@@ -2,11 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def plotWaitingTime(random_file = None, dqn_file = None, a2c_file = None):
+    
     # Read the csv files
     random_data = pd.read_csv(random_file)
     dqn_data = pd.read_csv(dqn_file)
     a2c_data = pd.read_csv(a2c_file)
-
 
     # Plot 1: DQN vs A2C
     plt.figure(figsize=(10, 5))
