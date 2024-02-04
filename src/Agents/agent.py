@@ -30,11 +30,11 @@ class Agent:
                 route_file="src/Intersection/2way-single-intersection/single-intersection-vhvh.rou.xml",
                 out_csv_name=f"data/{self.agent_type}_2way_{i}",
                 use_gui = False,
-                num_seconds = 6000,
+                num_seconds = 10000,
             )
 
             self.setup_model(env)
-            self.model.learn(total_timesteps = 6000)
+            self.model.learn(total_timesteps = 10000)
             
     def setup_model(self):
         raise NotImplementedError("This method should be implemented by subclasses")
