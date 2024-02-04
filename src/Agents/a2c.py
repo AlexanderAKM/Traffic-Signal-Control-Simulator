@@ -82,7 +82,7 @@ class A2C():
     Implements the Advantage Actor-Critic (A2C) algorithm.
     """
 
-    def __init__(self, env = None, lr = 0.001, n_steps = 6000, gamma = 0.99):
+    def __init__(self, env = None, lr = 0.001, n_steps = 10000, gamma = 0.99):
         """
         Initializes the A2C agent.
 
