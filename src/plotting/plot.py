@@ -2,14 +2,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-def average_csv(files):
-    """Averages multiple CSV files into a single DataFrame."""
-    data_frames = [pd.read_csv(f) for f in files]
+def average_csv(files, max_steps):
+    """Averages multiple CSV files into a single DataFrame, limited to the first max_steps rows."""
+    data_frames = [pd.read_csv(f, nrows=max_steps) for f in files]  # Limit rows read from each file
     # Ensure all CSV files have the same number of rows (steps)
     min_length = min(len(df) for df in data_frames)
     trimmed_data = [df.iloc[:min_length] for df in data_frames]
     concatenated = pd.concat(trimmed_data)
-    mean_data = concatenated.groupby(concatenated.index).mean()
+    mean_data = concatenated.groupby(level=0).mean()  # Ensure grouping by index works correctly
     return mean_data
 
 def smooth_and_ci(data, window_size=10):
@@ -25,9 +25,9 @@ a2c_files = ['data/A2C_2way_ep1.csv', 'data/A2C_2way_ep2.csv', 'data/A2C_2way_ep
 random_files = ['data/RANDOM_2way_0_ep1.csv', 'data/RANDOM_2way_1_ep1.csv', 'data/RANDOM_2way_2_ep1.csv', 'data/RANDOM_2way_3_ep1.csv', 'data/RANDOM_2way_4_ep1.csv']
 
 # Averaging
-dqn_avg = average_csv(dqn_files)
-a2c_avg = average_csv(a2c_files)
-random_avg = average_csv(random_files)
+dqn_avg = average_csv(dqn_files, 2000)
+a2c_avg = average_csv(a2c_files, 2000)
+random_avg = average_csv(random_files, 2000)
 
 # Smoothing and CI
 dqn_smoothed, dqn_ci = smooth_and_ci(dqn_avg['system_total_waiting_time'])
