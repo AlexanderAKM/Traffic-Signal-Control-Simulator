@@ -10,7 +10,7 @@ This Traffic Light Control Simulator is designed to facilitate the study and imp
 Together for a Reinforcement Learning course at the University of Groningen, we implemented a DQN, A2C, and Stochastic agent for a 2 way intersection. 
 
 ## Current Maintainer
-- [Alexander Müller]
+- Alexander Müller
 
 Some ideas that I am either currently working on or want to implement in the future are:
 1. Finetuning DQN and A2C.
